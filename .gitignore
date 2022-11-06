@@ -1,0 +1,7 @@
+
+data
+exps
+results
+__pycache__
+wandb
+*.env
