@@ -1,4 +1,4 @@
-
+# Training
 python train.py \
 --do_train \
 --do_eval \
@@ -22,3 +22,12 @@ python train.py \
 --output_dir ./exps \
 --learning_rate 3e-5 \
 --weight_decay 1e-3
+
+# Predict
+python evaluate.py \
+--PLM /home/wkrtkd911/project/conda/CONDA/results \
+--model_name JointBert \
+--eval_data_file CONDA_valid.csv \
+--per_device_eval_batch_size 32 \
+--report_to none \
+--max_length 256

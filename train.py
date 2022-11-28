@@ -58,6 +58,8 @@ def main():
     print("\nLoad tokenizer")
     model_name = model_args.PLM
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    special_tokens_dict = {'additional_special_tokens': ['[SEPA]']}
+    num_added_toks = tokenizer.add_special_tokens(special_tokens_dict)
 
     intent_label_dict = {'O' : 0, 'E' : 1, 'A' : 2, 'I' : 3}
     slot_label_dict = {'X' : 0, 'O' : 1, 'T' : 2, 'P' : 3, 'SEPA' : 4, 'S' : 5, 'D' : 6, 'C' : 7}
@@ -74,6 +76,7 @@ def main():
     model_category = importlib.import_module('models.model')
     model_class = getattr(model_category, model_args.model_name)
     model = model_class.from_pretrained(model_args.PLM, config=config)
+    model.resize_token_embeddings(len(tokenizer))
 
     # -- DataCollator
     data_collator = DataCollatorForJoint(
